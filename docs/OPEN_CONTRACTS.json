@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "status": "draft_not_frozen",
+  "owner": "EQ186",
+  "canonical_contract": "option-features/docs/r25/COMPATIBILITY.json",
+  "blockers": [
+    "R25-C01",
+    "R25-C02",
+    "R25-C05"
+  ],
+  "implementation_admitted": false,
+  "owner_gate": {
+    "decision": "independent_r25_progression_approved",
+    "supersedes_blanket_prerequisites": [
+      "EQ146",
+      "EQ143",
+      "EQ144"
+    ],
+    "accepted_reference": "EQ141",
+    "implementation_admission": "Reviewed frozen R25 contracts, compatible interfaces and story readiness; implementation_admitted remains false.",
+    "release_qualification": [
+      "EQ185 transport/storage conformance",
+      "EQ186 executor/resource/retry/cancellation qualification",
+      "EQ187 exact artifacts, Windows/Linux, independent numerical and integrated direct/worker/stored acceptance"
+    ],
+    "preserve_active_r18_ownership_and_reserved_resources": true
+  }
+}
