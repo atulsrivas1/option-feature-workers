@@ -20,6 +20,7 @@ import platform
 import re
 import sys
 import threading
+from types import ModuleType
 import zipfile
 
 from .types import FlowArtifact, FlowCohort, FlowCohortVerificationError
@@ -327,6 +328,42 @@ def _search_locations(actual, expected):
         raise FlowCohortVerificationError("cohort_unverified", "Invalid package search locations") from exc
 
 
+# Literal native-child shape observed in the exact pinned DuckDB1.5.6 wheel.
+_NATIVE_CHILD_EXPORTS = {'_duckdb._func': ('ARROW', 'DEFAULT', 'FunctionNullHandling', 'NATIVE', 'PythonUDFType', 'SPECIAL'), '_duckdb._sqltypes': ('BIGINT', 'BIT', 'BLOB', 'BOOLEAN', 'DATE', 'DOUBLE', 'DuckDBPyType', 'FLOAT', 'HUGEINT', 'INTEGER', 'INTERVAL', 'SMALLINT', 'SQLNULL', 'TIME', 'TIMESTAMP', 'TIMESTAMP_MS', 'TIMESTAMP_NS', 'TIMESTAMP_S', 'TIMESTAMP_TZ', 'TIME_NS', 'TIME_TZ', 'TINYINT', 'UBIGINT', 'UHUGEINT', 'UINTEGER', 'USMALLINT', 'UTINYINT', 'UUID', 'VARCHAR', 'VARIANT')}
+
+
+def _native_descendant_origins(modules, verified_origins):
+    """Two pinned extension-created children; never a general module waiver."""
+    if "_duckdb" not in verified_origins or "_duckdb" not in modules:
+        return {}
+    expected, package_dir = modules["_duckdb"]
+    if package_dir is not None or not any(str(expected).endswith(suffix)
+                                        for suffix in importlib.machinery.EXTENSION_SUFFIXES):
+        _fail("DuckDB native parent is not a verified extension module")
+    parent = sys.modules.get("_duckdb")
+    if parent is None:
+        if any(name in sys.modules for name in _NATIVE_CHILD_EXPORTS):
+            _fail("Native child exists without its verified loaded parent")
+        return {}
+    parent_file = getattr(parent, "__file__", None)
+    if type(parent) is not ModuleType or type(parent_file) is not str or Path(parent_file).resolve() != expected:
+        _fail("Native child parent differs from verified extension")
+    origins = {}
+    for name, expected_exports in _NATIVE_CHILD_EXPORTS.items():
+        child = sys.modules.get(name)
+        child_file = getattr(child, "__file__", None)
+        if (type(child) is not ModuleType or child.__name__ != name
+                or type(child_file) is not str or Path(child_file).resolve() != expected
+                or child_file != parent_file
+                or getattr(parent, name.rpartition(".")[2], None) is not child
+                or any(getattr(child, field, None) is not None for field in (
+                    "__spec__", "__loader__", "__package__", "__path__"))
+                or tuple(sorted(key for key in vars(child) if not key.startswith("__"))) != expected_exports):
+            _fail("Native child differs from the closed DuckDB1.5.6 profile")
+        origins[name] = str(expected)
+    return origins
+
+
 def _verify_module_origins(modules):
     """Check actual loaded state and import resolution for every wheel descendant.
 
@@ -362,8 +399,10 @@ def _verify_module_origins(modules):
             _fail("Importable descendant module origin differs from verified wheel")
         _search_locations(spec.submodule_search_locations, package_dir)
         origins[name] = str(expected)
+    native_origins = _native_descendant_origins(modules, origins)
+    origins.update(native_origins)
     for name in tuple(sys.modules):
-        if any(name.startswith(root + ".") for root in modules if "." not in root) and name not in modules:
+        if any(name.startswith(root + ".") for root in modules if "." not in root) and name not in modules and name not in native_origins:
             _fail("Loaded undeclared descendant module")
     return origins
 

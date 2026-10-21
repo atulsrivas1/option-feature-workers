@@ -3,13 +3,14 @@ from dataclasses import replace
 import platform
 import unittest
 import importlib.machinery
+from contextlib import contextmanager
 import sys
 import tempfile
 from pathlib import Path
 from types import ModuleType
 from unittest.mock import patch
 from option_flow_workers import FlowArtifact, FlowCohort, FlowCohortVerificationError
-from option_flow_workers.verification import _validate, sysconfig_platform, require_verified_flow_cohort, _verify_module_origins
+from option_flow_workers.verification import _validate, sysconfig_platform, require_verified_flow_cohort, _verify_module_origins, _native_descendant_origins, _NATIVE_CHILD_EXPORTS
 
 PROJECTS = (("option-flow-contracts", "contracts"), ("option-flow-features", "calculations"),
             ("option-flow-io", "io"), ("option-flow-workers", "workers"), ("duckdb", "dependency"))
@@ -101,6 +102,111 @@ class DescendantOriginTampering(unittest.TestCase):
                 origins = _verify_module_origins(expected)
                 self.assertEqual(origins["flow_verified_fixture.engine"], str((package / "engine.py").resolve()))
                 self.assertNotIn("flow_verified_fixture.engine", sys.modules)
+
+class ClosedNativeChildProfile(unittest.TestCase):
+    @contextmanager
+    def profile(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            native = Path(temporary) / ("_duckdb" + importlib.machinery.EXTENSION_SUFFIXES[0])
+            native.write_bytes(b"synthetic-profile-shape-only-not-a-native-artifact")
+            parent = ModuleType("_duckdb")
+            parent.__file__ = str(native)
+            parent.__spec__ = importlib.machinery.ModuleSpec("_duckdb", None, origin=str(native))
+            children = {}
+            for name, exports in _NATIVE_CHILD_EXPORTS.items():
+                child = ModuleType(name)
+                child.__file__ = str(native)
+                for export in exports:
+                    setattr(child, export, object())
+                children[name] = child
+                setattr(parent, name.rpartition(".")[2], child)
+            modules = {"_duckdb":(native.resolve(), None)}
+            verified = {"_duckdb":str(native.resolve())}
+            with patch.dict(sys.modules, {"_duckdb":parent, **children}):
+                yield parent, children, modules, verified
+
+    def test_literal_profile_accepts_exact_two_children_bound_to_verified_parent(self):
+        self.assertEqual(set(_NATIVE_CHILD_EXPORTS), {"_duckdb._func", "_duckdb._sqltypes"})
+        self.assertEqual(_NATIVE_CHILD_EXPORTS["_duckdb._func"],
+                         ("ARROW", "DEFAULT", "FunctionNullHandling", "NATIVE", "PythonUDFType", "SPECIAL"))
+        with self.profile() as (parent, children, modules, verified):
+            origins = _native_descendant_origins(modules, verified)
+            self.assertEqual(set(origins), {"_duckdb._func", "_duckdb._sqltypes"})
+            self.assertTrue(all(value == str(Path(parent.__file__).resolve()) for value in origins.values()))
+
+    def test_altered_native_child_file_is_rejected(self):
+        with self.profile() as (parent, children, modules, verified):
+            children["_duckdb._func"].__file__ += ".foreign"
+            with self.assertRaises(FlowCohortVerificationError):
+                _native_descendant_origins(modules, verified)
+
+    def test_native_child_spec_loader_package_or_path_is_rejected(self):
+        for field, value in (("__spec__", object()), ("__loader__", object()),
+                             ("__package__", "foreign"), ("__path__", [])):
+            with self.subTest(field=field), self.profile() as (parent, children, modules, verified):
+                setattr(children["_duckdb._func"], field, value)
+                with self.assertRaises(FlowCohortVerificationError):
+                    _native_descendant_origins(modules, verified)
+
+    def test_native_child_parent_attribute_identity_is_required(self):
+        for mutation in ("replacement", "deletion"):
+            with self.subTest(mutation=mutation), self.profile() as (parent, children, modules, verified):
+                if mutation == "replacement":
+                    parent._func = ModuleType("_duckdb._func")
+                else:
+                    del parent._func
+                with self.assertRaises(FlowCohortVerificationError):
+                    _native_descendant_origins(modules, verified)
+
+    def test_native_child_name_and_exact_module_type_are_required(self):
+        with self.profile() as (parent, children, modules, verified):
+            children["_duckdb._func"].__name__ = "_duckdb.impostor"
+            with self.assertRaises(FlowCohortVerificationError):
+                _native_descendant_origins(modules, verified)
+        with self.profile() as (parent, children, modules, verified):
+            class Submodule(ModuleType):
+                pass
+            replacement = Submodule("_duckdb._func")
+            replacement.__dict__.update(vars(children["_duckdb._func"]))
+            parent._func = replacement
+            with patch.dict(sys.modules, {"_duckdb._func":replacement}):
+                with self.assertRaises(FlowCohortVerificationError):
+                    _native_descendant_origins(modules, verified)
+
+    def test_native_children_require_complete_closed_export_inventory(self):
+        for mutation in ("missing_child", "extra_export", "missing_export"):
+            with self.subTest(mutation=mutation), self.profile() as (parent, children, modules, verified):
+                if mutation == "missing_child":
+                    sys.modules.pop("_duckdb._sqltypes")
+                elif mutation == "extra_export":
+                    children["_duckdb._func"].UNREVIEWED_EXPORT = object()
+                else:
+                    del children["_duckdb._func"].ARROW
+                with self.assertRaises(FlowCohortVerificationError):
+                    _native_descendant_origins(modules, verified)
+
+    def test_third_native_descendant_remains_rejected(self):
+        with self.profile() as (parent, children, modules, verified):
+            extra = ModuleType("_duckdb.unreviewed")
+            extra.__file__ = parent.__file__
+            parent.unreviewed = extra
+            with patch.dict(sys.modules, {"_duckdb.unreviewed":extra}), patch.object(sys, "path", [str(Path(parent.__file__).parent)] + sys.path):
+                with self.assertRaises(FlowCohortVerificationError):
+                    _verify_module_origins(modules)
+
+    def test_unverified_native_parent_cannot_authorize_children(self):
+        with self.profile() as (parent, children, modules, verified):
+            self.assertEqual(_native_descendant_origins(modules, {}), {})
+            self.assertEqual(_native_descendant_origins({}, verified), {})
+        with self.subTest(mutation="root_meta_path_shadow"), self.profile() as (parent, children, modules, verified):
+            class ForeignNativeFinder:
+                def find_spec(self, fullname, path=None, target=None):
+                    if fullname == "_duckdb":
+                        return importlib.machinery.ModuleSpec(fullname, None, origin=parent.__file__ + ".foreign")
+                    return None
+            with patch.object(sys, "meta_path", [ForeignNativeFinder()] + sys.meta_path):
+                with self.assertRaises(FlowCohortVerificationError):
+                    _verify_module_origins(modules)
 
 if __name__ == "__main__":
     unittest.main()

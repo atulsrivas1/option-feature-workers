@@ -196,3 +196,39 @@ Exact committed-source validation and fresh independent PR review remain next.
 ## First actual artifact preparation failure
 
 The coordinator attempted exact-source Windows candidate construction. It stopped at the first interpreter metadata inspection before any native-wheel inspection, source archive or package build: the existing prepared builder has no separately installed wheel distribution. That package is not in the frozen setuptools80.9.0 build-system requirements; subsequent actual builds must verify the selected backend artifact support. The helper incorrectly required wheel metadata merely to report an optional tool version. Corrected inspection records null when wheel is absent, retaining mandatory actual CPython/platform/setuptools/build/packaging checks and all artifact gates. No original R25 builder/input was modified. The failed attempt and conservative resource hold/reconciliation remain retained; a new output directory, reviewed helper and new lease are required for retry. No artifact acceptance follows from this correction.
+
+## Installed native-origin profile correction
+
+The coordinator's actual original-wheel installed five-distribution candidate
+failed verification with `Loaded undeclared descendant module`. Read-only diagnosis
+identified exactly two extension-created DuckDB1.5.6 children, `_duckdb._func` and
+`_duckdb._sqltypes`: both point to the already reviewed `_duckdb` native artifact,
+have no separate spec/loader/package/search path, and are identical to their
+parent's corresponding module attributes. This failure established no installed
+cohort admission; prior source reviews and artifact hash agreement did not cover
+this native child shape.
+
+A coordinator-authorized closed native-origin profile now permits only these two
+literal child names/closed export inventories, only after their parent's actual
+wheel origin is verified. Both must be exact ModuleType objects with exact names,
+the same native file as that parent, identical parent attribute bindings, and null
+spec/loader/package/path metadata. Missing/changed children, extra exports, altered
+origins/specs/search paths and every other undeclared descendant remain rejected.
+DuckDB version/source/wheel/RECORD/notices checks remain mandatory; no dependency,
+formula, fixture expectation or R25 profile changes are introduced.
+
+Eight additional authored native-profile test methods include a literal positive
+shape control and rejection of changed child files/metadata/name/type/parent
+attributes/export inventory, an unreviewed third child, and lack of a verified
+parent. Synthetic modules do not qualify actual native execution. Only AST checks
+were executed by this author for this correction. Fresh independent review and
+actual installed native/tamper qualification remain pending; no rebuild/runtime,
+Git operation or publication was performed here.
+
+## Linux builder executable preparation
+
+Read-only inspection of the existing Linux builder shows bin/python is a virtual-environment symlink. The helper previously resolved that executable to its base interpreter before invocation, which would discard the configured builder prefix on Linux. Before any R26 Linux build attempt, the coordinator changed only executable path handling to preserve its absolute configured path and require an existing file. Mandatory actual CPython/backend/platform inspection remains unchanged; the subsequent actual Linux build must verify the prepared environment. Windows executable paths are preserved equivalently. This is a source-discovered platform defect, not an executed Linux failure or Linux acceptance.
+
+## Native profile source-development validation
+
+Actual R26-WORKERS-DEV04 ran33methods:32passed and the positive-control assertion failed because the Windows temporary parent path used an8.3 alias while verified origins were resolved long paths. Production checks were unchanged; the test now compares the resolved parent path. The preserved retry R26-WORKERS-DEV05 passed all33methods in0.363s (1.143s command elapsed), with identical before/after producer/test hashes and no failures/errors/skips. Eight native-profile methods include deletion of the parent attribute and root import-finder shadow subcases. These are development controls with synthetic module objects, not actual installed native admission. The original installed failure remains retained; new exact artifacts and actual clean-runtime verification are still required.
