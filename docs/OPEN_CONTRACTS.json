@@ -1,14 +1,19 @@
 {
   "schema_version": 1,
-  "status": "draft_not_frozen",
+  "status": "source_authoring_in_progress_not_runtime_qualified",
   "owner": "EQ186",
-  "canonical_contract": "option-features/docs/r25/COMPATIBILITY.json",
+  "canonical_contract": "option-features/docs/r25/CONTRACT_MANIFEST.json",
+  "source_authoring_freeze_commit": "9403854ff37a7c0b5dbc57c142893a1ce0a262e4",
   "blockers": [
-    "R25-C01",
-    "R25-C02",
-    "R25-C05"
+    "Protected original EQ142 runtime hold remains in force",
+    "Actual producer wheels and independently reviewed source/build cohort manifest required",
+    "Numerical/artifact/platform/integration/browser evidence not run"
   ],
-  "implementation_admitted": false,
+  "implementation_admitted": true,
+  "admission_scope": "Source authoring only; no runtime, build, install, test, numerical generation or database permission",
+  "runtime_qualified": false,
+  "artifact_qualified": false,
+  "platform_qualified": false,
   "owner_gate": {
     "decision": "independent_r25_progression_approved",
     "supersedes_blanket_prerequisites": [
@@ -17,7 +22,7 @@
       "EQ144"
     ],
     "accepted_reference": "EQ141",
-    "implementation_admission": "Reviewed frozen R25 contracts, compatible interfaces and story readiness; implementation_admitted remains false.",
+    "implementation_admission": "Reviewed frozen R25 contracts and explicit fresh worker source grant at 9403854ff37a7c0b5dbc57c142893a1ce0a262e4; producer runtime dependencies remain acceptance gates.",
     "release_qualification": [
       "EQ185 transport/storage conformance",
       "EQ186 executor/resource/retry/cancellation qualification",
