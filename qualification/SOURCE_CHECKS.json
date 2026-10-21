@@ -1,0 +1,112 @@
+{
+  "evidence_version": "r25-worker-source-check1",
+  "base_commit": "73b1c5109d2ce5ff7273071c9a72ba8d87d4b5e1",
+  "candidate_state": "uncommitted source; not exact-head merge evidence",
+  "environment": {
+    "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "machine": "AMD64"
+  },
+  "checks": [
+    "stdlib ast.parse for Python source",
+    "stdlib json.loads for JSON",
+    "stdlib tomllib.loads for TOML",
+    "UTF-8, trailing-whitespace and final-newline checks including untracked files"
+  ],
+  "result": "passed",
+  "files": [
+    {
+      "path": ".github/workflows/docs.yml",
+      "sha256": "1c1c25860be5fe1e9590dd373871eac0aa243c387eb4c1e73f636d2e199fc285"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "42ef4f9a2d2e0d5cfa04f9aa79f7b251ab7b02cbd7d2e88669d222149359dfb3"
+    },
+    {
+      "path": "docs/API.md",
+      "sha256": "a0ab2cec0a7272f53477fda87cc52e42d6aa611f7d868a09cd98fbd7b381c468"
+    },
+    {
+      "path": "docs/OPEN_CONTRACTS.json",
+      "sha256": "4db6c33395601096c682b233b6f91b8177c40bf88406079657536eeab54b6625"
+    },
+    {
+      "path": "docs/R25_HANDOFF.md",
+      "sha256": "37966fa3c656c5c4196d4087f6166fc3c7e53c1e804658b099184b99ae80fb24"
+    },
+    {
+      "path": "docs/SESSION_HANDOFF.md",
+      "sha256": "e06f091d65208083f5612974294fda20bbf89f0ea43c9159c3de9017b7b1771a"
+    },
+    {
+      "path": "docs/VERSIONING.md",
+      "sha256": "ca37afba718d6ef88473fd6156915b6c590a462bb3b98070dfef3e4fdc7741cd"
+    },
+    {
+      "path": "examples/stored_demo.py",
+      "sha256": "3a9e5cadc74a685a3f7c5af0b63782c387c75a3fdce1cfefb62d08e4df9a0fe2"
+    },
+    {
+      "path": "examples/synthetic_scenario.py",
+      "sha256": "7ef3805a23fc51f80f9bc0d20f9ad99117d7f93aee7f39b16b6e971a8b5360a8"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "packages/workers/LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "packages/workers/pyproject.toml",
+      "sha256": "1160b9e5c67f82735868daae48570620652a63c2848c363048c3f595f7253405"
+    },
+    {
+      "path": "packages/workers/README.md",
+      "sha256": "08bc3ab0bb3f49489e5d88b611315c409e9fc463fb2ad99772c1a7df45b50b1a"
+    },
+    {
+      "path": "packages/workers/src/option_feature_workers/__init__.py",
+      "sha256": "4c0bd353ed1943def19e0c09d0e5c71d5e007ae70f1568d9a4a59728b020ec3a"
+    },
+    {
+      "path": "packages/workers/src/option_feature_workers/executor.py",
+      "sha256": "9645db218bfcc8bbc61ed2575c30a32b5d15cecfb67f08243206e2cff866353e"
+    },
+    {
+      "path": "packages/workers/src/option_feature_workers/types.py",
+      "sha256": "6cf081dbb0e498bb8c9301ae56fce67c3e992c1ab7137924248feba5df809474"
+    },
+    {
+      "path": "packages/workers/src/option_feature_workers/verification.py",
+      "sha256": "6d21ec453c844d898970247e09338a34f8f889e97b9921fc79266582498bed55"
+    },
+    {
+      "path": "packages/workers/tests/test_orchestration.py",
+      "sha256": "5a696342a05421a7eba48cdb81964243b85cc169759d8f09a16f8dea4967a7b5"
+    },
+    {
+      "path": "packages/workers/tests/test_verifier.py",
+      "sha256": "0ec2aed0264326ad84af061761557678b181975cbe6fcc5af1d7978c675c2643"
+    },
+    {
+      "path": "qualification/README.md",
+      "sha256": "bd781656866dccd1f917a93c289d39274eed4be16f528f178ef4de82e681487d"
+    },
+    {
+      "path": "qualification/run_integration.py",
+      "sha256": "6b414044c15f0912d0f5b66d95d1c3744943497fce168b25f7df716c711cf1ef"
+    },
+    {
+      "path": "README.md",
+      "sha256": "9ce655621aa904bc4a86df64fedff427d86d993197cca58ef6b75f1346862cba"
+    }
+  ],
+  "package_imports": false,
+  "runtime_tests": false,
+  "builds_installs": false,
+  "numerical_execution": false,
+  "database_execution": false
+}
