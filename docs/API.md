@@ -1,5 +1,11 @@
 # R25 worker API candidate
 
+## Separate R26 flow worker API
+
+`option-flow-workers==0.1.0a1` exports `option_flow_workers.execute_flow`, `execute_flow_replay`, `execute_flow_restore`, `inspect_flow_resources` and `verify_flow_installed` with separate `FlowExecutionConfig`/cohort records. The full closed runtime is contracts/features/I/O/workers at0.1.0a1 plus DuckDB1.5.6; pure calculations use contracts/features only. Supported modes are batch, chronological-cut replay and bounded full-prefix checkpoint restore, each one worker/inflight/I/O/backend thread. Logical admission is not an RSS bound; cancellation/retry preserve actual committed generations. The original R25 API and six-distribution verifier below are unchanged.
+
+The [R26 API index](https://github.com/atulsrivas1/option-features/blob/460dd1ab8c6a7b6d884b2eed69cda7964475c17e/docs/r26/README.md), [typed signatures/codecs/status/evidence](https://github.com/atulsrivas1/option-features/blob/460dd1ab8c6a7b6d884b2eed69cda7964475c17e/docs/r26/FLOW_CONTRACT.md), [mathematics](https://github.com/atulsrivas1/option-features/blob/460dd1ab8c6a7b6d884b2eed69cda7964475c17e/docs/r26/MATHEMATICS.md), [output/profile bindings](https://github.com/atulsrivas1/option-features/blob/460dd1ab8c6a7b6d884b2eed69cda7964475c17e/docs/r26/FEATURE_BINDINGS.json), [compatibility](https://github.com/atulsrivas1/option-features/blob/460dd1ab8c6a7b6d884b2eed69cda7964475c17e/docs/r26/COMPATIBILITY.json), [pure example](https://github.com/atulsrivas1/option-features/blob/460dd1ab8c6a7b6d884b2eed69cda7964475c17e/examples/r26/README.md) and [current qualification](https://github.com/atulsrivas1/option-features/blob/460dd1ab8c6a7b6d884b2eed69cda7964475c17e/docs/r26/LOCAL_QUALIFICATION.md) distinguish implemented native scope from gated EQ190 equity outputs, which remain unsupported/equity_integration_unqualified. R26 remains UNRELEASED; historical R25 no-runtime text below describes its dated source checkpoint.
+
 Source implementation under [EQ186](https://github.com/atulsrivas1/equity-features/issues/531),
 against independently reviewed contract freeze
 `9403854ff37a7c0b5dbc57c142893a1ce0a262e4` in option-features.

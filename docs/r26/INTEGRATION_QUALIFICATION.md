@@ -1,5 +1,11 @@
 # Installed R26 integration qualification consumer
 
+## Actual coordinator execution — October 21, 2026
+
+The coordinator subsequently ran this consumer in real admitted original-wheel Windows CPython3.12.10 and Ubuntu24.04/WSL CPython3.12.3 cohorts. Each passed101 integration checks, including all433 complete independent rows and19 input errors, actual transaction/readback, genuine replay/restore, retries/cancellation and selected fault/corruption seams. The accepted Windows-original outputs were actually exported and browser-inspected. [Current local qualification](https://github.com/atulsrivas1/option-features/blob/460dd1ab8c6a7b6d884b2eed69cda7964475c17e/docs/r26/LOCAL_QUALIFICATION.md) binds exact artifact/source/manifest identities, receipt hashes, measured timing/RSS and limitations. Rebuilt-form integrations and remaining native queue checks are pending at this snapshot. The author's source-only checkpoint below is preserved; these actual later executions do not imply power-loss durability, representative performance, EQ190 integration or release/publication acceptance.
+
+## Historical authored-source scope
+
 `tools/flow_qualify_integration.py` is authored source, not executed qualification
 proof. Source author: `/root/r26_native_worker_implementation`. Fresh independent
 review and an actual coordinator runtime lease must precede execution. This change
