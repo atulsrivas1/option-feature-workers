@@ -1,9 +1,14 @@
-# R25 worker qualification — not run
+# R25 worker qualification
 
-Everything here is source prepared while the original EQ142 protected runtime
-reservation is held. No command below has been executed as part of authoring.
-The coordinator must record the actual hold release before imports/tests/builds,
-installs, numerical generation or DuckDB operations. Source checks do not lift it.
+## Current evidence — October 21, 2026
+
+The original EQ142 exclusive hold was explicitly released after actual-state reconciliation, without accepting the interrupted study or changing EF1/R18 ownership. Bounded R25 local validation is admitted. Both supported platforms now passed exact-source component and reviewed fixture qualification on original-wheel and original-sdist-rebuilt-wheel forms. See [current local qualification](https://github.com/atulsrivas1/option-features/blob/codex/r25-qualification-evidence/docs/R25_LOCAL_QUALIFICATION.md) for commits, artifacts, counts, fixture hash and pending acceptance gates.
+
+Both final-wheel cohorts passed verification/computation followed by seven tamper-rejection checks each (Windows 253 verified files, Linux 207). Both platforms also passed 172 additional package-layer isolation methods across six fresh pip-free environments, verifying exact closures and absent unselected layers. A first Linux isolation-harness preflight aborted before tests; the freshly reviewed corrected v2 helper passed without production changes. All four frozen five-scenario harnesses passed; broad 111-case batch/replay integration passed both Linux forms and Windows original wheels, with Windows rebuilt-sdist broad integration still running as a mandatory gate. Portable v2 bundles passed fresh-download/two-form installation/verification and stored scenarios on both platforms; final documentation-only wrapper review remains pending. The coordinator inspected the stored-output browser demo (five tables/45 rows) and an all-14-output price/IV round trip; Result parity is not an independent oracle. **Source PRs are merged; source stories remain Test, EQ187 is In progress and R25 is UNRELEASED.** Final byte comparison and acceptance remain open. Hosted CI is optional; actual local evidence remains required.
+
+## Reproduction procedure and evidence requirements
+
+The procedure below was originally authored before resource release. Its build, installation, trust, no-bytecode and evidence requirements remain applicable; commands are examples requiring actual platform-specific retained configuration/paths. Their listing alone does not prove execution or replace the current report and exact command receipts. Controlled staging and original-sdist rebuilds are distinct artifact forms; never relabel an earlier cohort as the current source.
 
 After source/diff review, build all actual project producers from reviewed exact
 commits in controlled staging directories. Generate `_build_identity.json`
