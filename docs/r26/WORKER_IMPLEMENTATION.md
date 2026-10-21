@@ -192,3 +192,7 @@ No real artifact construction, installed five-distribution verification, native
 DuckDB descendant compatibility, end-to-end numerical fixture parity, Linux run,
 resource measurement or release acceptance is established by these unit checks.
 Exact committed-source validation and fresh independent PR review remain next.
+
+## First actual artifact preparation failure
+
+The coordinator attempted exact-source Windows candidate construction. It stopped at the first interpreter metadata inspection before any native-wheel inspection, source archive or package build: the existing prepared builder has no separately installed wheel distribution. That package is not in the frozen setuptools80.9.0 build-system requirements; subsequent actual builds must verify the selected backend artifact support. The helper incorrectly required wheel metadata merely to report an optional tool version. Corrected inspection records null when wheel is absent, retaining mandatory actual CPython/platform/setuptools/build/packaging checks and all artifact gates. No original R25 builder/input was modified. The failed attempt and conservative resource hold/reconciliation remain retained; a new output directory, reviewed helper and new lease are required for retry. No artifact acceptance follows from this correction.

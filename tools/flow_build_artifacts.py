@@ -190,7 +190,7 @@ def execute(args):
                "source_commits":commits, "limitation":"Local artifact construction only; independent source/artifact review, runtime admission, platform qualification and release approval remain separate."}
     try:
         builder = args.builder_python.resolve(strict=True)
-        inspection = commands.run([str(builder), "-I", "-B", "-c", "import importlib.metadata as m,json,platform,sys,sysconfig; print(json.dumps({'python':sys.version,'implementation':platform.python_implementation(),'platform_id':sysconfig.get_platform(),'setuptools':m.version('setuptools'),'build':m.version('build'),'wheel':m.version('wheel'),'packaging':m.version('packaging')}))"], cwd=output)
+        inspection = commands.run([str(builder), "-I", "-B", "-c", "import importlib.metadata as m,json,platform,sys,sysconfig; print(json.dumps({'python':sys.version,'implementation':platform.python_implementation(),'platform_id':sysconfig.get_platform(),'setuptools':m.version('setuptools'),'build':m.version('build'),'wheel':next((d.version for d in m.distributions() if d.metadata['Name'].lower()=='wheel'),None),'packaging':m.version('packaging')}))"], cwd=output)
         versions = json.loads(inspection)
         if versions["setuptools"] != "80.9.0" or versions["implementation"] != "CPython" or not versions["python"].startswith("3.12."):
             raise ValueError("Prepared CPython3.12 builder with exact setuptools80.9.0 required")
