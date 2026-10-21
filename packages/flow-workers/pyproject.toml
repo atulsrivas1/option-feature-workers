@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools==80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "option-flow-workers"
+version = "0.1.0a1"
+description = "Bounded, content-bound option flow execution"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+dependencies = ["option-flow-contracts==0.1.0a1", "option-flow-features==0.1.0a1", "option-flow-io==0.1.0a1"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+option_flow_workers = ["_build_identity.json"]
