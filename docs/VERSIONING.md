@@ -1,6 +1,6 @@
 # Version and compatibility policy
 
-Owner agreed independent library/package versions with tested cross-repository compatibility on October 20, 2026. R25 is a delivery milestone, not a package version. Candidate option package versions have not been built, installed or published by this baseline.
+Owner agreed independent library/package versions with tested cross-repository compatibility on October 20, 2026. R25 is a delivery milestone, not a package version. Candidate option package versions have not been built, installed or published by this preparation. The owner approved independent R25 progression; exact selected R17 references still require R25 compatibility qualification. No R18/EQ146 or EQ143/EQ144 acceptance wait applies to R25, and no candidate equity version is promoted by that decision.
 
 Experimental dependencies are exact pins, extended to artifact hashes/source commits in release locks. Do not follow a moving equity branch or upgrade automatically. First qualify the selected package combination and shared-contract agreement on Windows/Linux, update the compatibility manifest and then release the consuming package. A changed exact dependency requires a new immutable consuming-package release; do not overwrite released metadata.
 
