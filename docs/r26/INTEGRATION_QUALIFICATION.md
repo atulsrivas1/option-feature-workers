@@ -8,9 +8,35 @@ All 21 serialized contained commands per cohort completed with exit zero and ver
 
 Exact built sources are library `5df4bbb3ea23225d5316b4f93c13b5975cd9435b`, I/O `0f7c09206b0e13efbfb80c6ca91943a7e8368219` and workers `b52b579af921479bb4a3814450a618fa681ff6d1`. Original/rebuilt wheel-member parity and independent actual archive/manifest checks passed on each platform before installation. The original six normative files, original full oracle and R25 package sources remain unchanged. Original R25 preservation passed separately in all four released closed-six-distribution runtimes: 82 methods, 111 cases/378 rows, exact released wires and both frozen platform bundles unchanged. Independent preservation evidence review: `96397e2b05866b6258aaa0b1fe8fe1d131873a59f50eca8641a16c06d5495b12`.
 
-This checkpoint establishes installed components and pure-result conformance. Full corrected Windows original worker/storage integration is running; other corrected base and supplemental worker/storage pipelines, tamper checks, 12 partial closures, bounded measurements, installed example and corrected stored browser proof remain required. Earlier integration/browser passes retain their original candidate identities. Actual accepted EQ153/EQ158 producers still gate EQ190 and full EQ193. No R26 acceptance, completion or publication is claimed or authorized. [Public coordinated checkpoint](https://github.com/atulsrivas1/equity-features/issues/533#issuecomment-6312653613) records actual evidence and the retained harness failures. Hosted CI is optional under the owner's local-proof merge policy.
+This checkpoint establishes installed components and pure-result conformance. Corrected Windows original-wheel base and supplemental worker/storage integration subsequently passed as recorded below; the remaining three corrected worker/storage cohorts, tamper checks, 12 partial closures, bounded measurements, installed example and corrected stored browser proof remain pending at that saved-evidence checkpoint. Earlier integration/browser passes retain their original candidate identities. Actual accepted EQ153/EQ158 producers still gate EQ190 and full EQ193. No R26 acceptance, completion or publication is claimed or authorized. [Public coordinated checkpoint](https://github.com/atulsrivas1/equity-features/issues/533#issuecomment-6312653613) records actual evidence and the retained harness failures. Hosted CI is optional under the owner's local-proof merge policy.
 
 Earlier dated sections below preserve the status and evidence of their respective checkpoints.
+
+## Supplemental worker/storage consumer — Windows original-wheel checkpoint
+
+[`tools/flow_qualify_supplements.py`](../../tools/flow_qualify_supplements.py) consumes the separately authored and audited definition-partition and selection-clock fixtures. Its main census is 20 cases and 126 complete result rows: eight definition cases/78 rows and 12 clock cases/48 rows. Each strict input passes the real synthetic adapter and direct pure evaluator, then actual worker commit, identical retry, stored readback, close/reopen and retry after reopen. Complete value/status/evidence/identity payloads, canonical bytes, record digests and wire envelopes must match the independent literals. Source/artifact identities are verified before and after the consumer; every production worker dispatch retains its own unchanged cohort verification.
+
+The tool also runs two **singleton** replay controls, using one already independently specified snapshot/request invocation per fixture family. The actual Windows run checked 15 literal rows across these two controls, counted separately from the 126 main rows. These are not multi-cut replay coverage. The original 433-row `flow_qualify_integration.py` consumer owns genuine chronological replay and retained-prefix restore evidence. The supplemental consumer makes no independent checkpoint oracle or supplemental checkpoint/restore claim; its direct/worker/stored output-checkpoint comparisons are same-invocation parity.
+
+Run only in the externally admitted installed five-distribution cohort, with a reviewed containing controller and an actual serialized coordinator lease. Use `python -I -B`, no `PYTHONPATH` or package source-path insertion, and a new private output directory. The consumer neither builds/installs packages, creates fixture expectations nor grants itself a lease or trust anchor. Required CLI arguments are:
+
+```text
+<installed-runtime-python> -I -B tools/flow_qualify_supplements.py
+  --definition-fixture DEFINITION_FIXTURE --definition-fixture-sha256 EXTERNAL_SHA256
+  --clock-fixture CLOCK_FIXTURE --clock-fixture-sha256 EXTERNAL_SHA256
+  --inputs FIVE_ARTIFACT_INPUTS --inputs-sha256 EXTERNAL_SHA256
+  --manifest QUALIFICATION_MANIFEST --manifest-file-sha256 EXTERNAL_SHA256
+  --trusted-manifest-sha256 INDEPENDENT_MANIFEST_DOMAIN_ANCHOR
+  --consumer-sha256 REVIEWED_TOOL_SHA256
+  --lease-file ACTIVE_COORDINATOR_GRANT --lease-sha256 ACTUAL_GRANT_SHA256
+  --lease ACTUAL_COORDINATOR_LEASE_ID --output NEW_PRIVATE_DIRECTORY
+```
+
+The configured worker/inflight/I/O/backend concurrency is 1/1/1/1 and the logical reservation is 256 MiB; it is not an RSS or native-memory bound. Each case retains actual adapter, commit/retry, logical-admission and publication identities, with owned synthetic databases and a final `supplement-integration-attempt.json`. Failed attempts require a new directory and remain evidence, not a partial pass.
+
+The corrected Windows original-wheel run actually passed all 20 cases/126 main rows and both singleton replay controls/15 separately counted rows. Its containing controller exited zero, verified the owned child tree empty and released its lease and lock. Tool SHA256: `c2da8f8e32f998b0836a1b87ceb6397a27480a7496b9e1f9681f30f6dea31746`; actual controller receipt: `4b54b4534413986a037c3e36eb8771fed67dcdebcb3ac51034c00f1cd850eece`; consumer receipt: `9c5f00ba489c966beaf9e4de871e215d27782133c16747492f7721e9a5e3c79f`. Fresh independent saved-evidence review passed with SHA256 `e02b2000338cdcec45d1299e076e632c45f42ea3e8e3ad253a84a3b9640b2c3e`. The same corrected Windows original cohort separately passed the original 101 base checks/433 rows/19 expected errors: controller `72b665ec467b0a184b772e5e7dd54b9c395f47f3684cb16ac37175bd6fc334bd`, consumer `56f46da19ae40c210b0e5e5c8f57bcb82887ca8d91b1f8cc03773f55a72a6d58`.
+
+This checkpoint qualifies that Windows original-wheel worker/storage scope only. Other corrected platform/form worker/storage cohorts remain pending here; the earlier four-cohort component/pure-result passes do not establish those pipelines. Browser inspection, remaining native gates, accepted equity producers and full R26 acceptance/publication remain separate.
 
 ## Actual coordinator execution — October 21, 2026
 
