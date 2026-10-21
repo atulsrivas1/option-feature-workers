@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "status": "draft_not_frozen",
+  "owner": "EQ186",
+  "canonical_contract": "option-features/docs/r25/COMPATIBILITY.json",
+  "blockers": [
+    "EQ146",
+    "R25-C01",
+    "R25-C02",
+    "R25-C05"
+  ],
+  "implementation_admitted": false
+}
