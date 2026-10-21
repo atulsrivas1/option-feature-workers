@@ -1,3 +1,7 @@
+## R25 published and readback verified — October 21, 2026
+
+Owner-approved [GitHub prerelease `v0.1.0a1`](https://github.com/atulsrivas1/option-feature-workers/releases/tag/v0.1.0a1) is published at exact commit `15e68a226c7b21e6e1a9e7a12c5a3cbcf966582a`. Actual tag/tree and all four assets downloaded from this release match the prepared packet; the same verification covers all three option repositories. See [published acceptance](https://github.com/atulsrivas1/option-features/blob/main/docs/R25_RELEASE.md). Qualification is complete; original artifact build-source labels remain unchanged. Current live Project is lifecycle authority; final acceptance-documentation merge precedes Done/issue and milestone closure. Earlier UNRELEASED/pending-approval handoffs below retain their original chronology. No further runtime qualification or owner publication approval is pending.
+
 ## Current R25 qualification handoff — October 21, 2026
 
 See the library [current qualification report](https://github.com/atulsrivas1/option-features/blob/main/docs/R25_LOCAL_QUALIFICATION.md) and [public component evidence](https://github.com/atulsrivas1/equity-features/issues/526#issuecomment-6308022775).
