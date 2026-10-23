@@ -1,8 +1,8 @@
 """R26 option-flow-variants1 worker layer: checkpoint lifecycle and run translation.
 
-Consumes the pure evaluator (option_features.variants1) and the strict codec
-(option_feature_io.variants1). Storage and sink adapters are not part of this
-module; a run that needs a sink is reported as not executed.
+Consumes the pure evaluator (option_features.variants1) and the shared record
+canonicalisation (option_feature_contracts.variants1). Storage is the
+VariantDuckDBSink in the storage module; no codec from the I/O package is used.
 """
 from .errors import VariantWorkerError
 from .checkpoint import make_checkpoint, validate_restore

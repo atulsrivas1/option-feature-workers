@@ -19,12 +19,12 @@ def _compute(snapshot, request, cohort, run_key, cohort_verified, input_checkpoi
         results = evaluate_variants(snapshot, request, cohort_sha256=cohort_sha,
                                     input_checkpoint_sha256=input_hash,
                                     producer_admission=producer_admission)
+        out_cp = make_checkpoint(cut_history(snapshot, request), request, cohort, producer_admission)
+        pub = build_publication(snapshot, request, results, run_key=run_key, cohort=cohort,
+                                cohort_sha256=cohort_sha, producer_admission=producer_admission,
+                                input_checkpoint_sha256=input_hash, output_checkpoint=out_cp)
     except VariantValidationError as exc:
         raise input_invalid(exc) from exc
-    out_cp = make_checkpoint(cut_history(snapshot, request), request, cohort, producer_admission)
-    pub = build_publication(snapshot, request, results, run_key=run_key, cohort=cohort,
-                            cohort_sha256=cohort_sha, producer_admission=producer_admission,
-                            input_checkpoint_sha256=input_hash, output_checkpoint=out_cp)
     return {
         "run_key": run_key,
         "work_sha256": pub["work_sha256"],
