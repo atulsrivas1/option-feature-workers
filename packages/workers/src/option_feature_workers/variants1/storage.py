@@ -165,10 +165,16 @@ class VariantDuckDBSink:
                 self._con.execute("INSERT INTO variant_schema VALUES (?)", [SCHEMA_GENERATION])
                 self._con.execute("COMMIT")
             except BaseException:
-                self._con.execute("ROLLBACK")
+                self._rollback()
                 raise
             return
         self._check_schema()
+
+    def _rollback(self):
+        try:
+            self._con.execute("ROLLBACK")
+        except Exception:
+            pass  # keep the original error
 
     def _other_objects(self):
         con = self._con
@@ -327,7 +333,7 @@ class VariantDuckDBSink:
                             [run_key, record_digest("variant_Checkpoint", cp), envelope("variant_Checkpoint", cp)])
             con.execute("COMMIT")
         except BaseException:
-            con.execute("ROLLBACK")
+            self._rollback()
             raise
         again = self.read(run_key)
         if again is None or canonical_json(again) != canonical_json(publication):

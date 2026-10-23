@@ -38,8 +38,27 @@ def _check_config(config, mode):
         raise input_invalid(exc) from exc
 
 
+_INVENTORY = frozenset({
+    ("duckdb", "dependency", "1.5.6"), ("option-flow-contracts", "contracts", "0.1.0a1"),
+    ("option-flow-features", "calculations", "0.1.0a1"), ("option-flow-io", "io", "0.1.0a1"),
+    ("option-flow-workers", "workers", "0.1.0a1"),
+})
+
+
+def _check_inventory(cohort):
+    """The worker requires the exact full-pipeline artifact inventory (not the pure-library subset)."""
+    try:
+        arts = [(a["distribution"], a["role"], a["version"]) for a in cohort["artifacts"]]
+    except (TypeError, KeyError):
+        raise VariantWorkerError("cohort_unverified") from None
+    if len(arts) != len(_INVENTORY) or frozenset(arts) != _INVENTORY:
+        raise VariantWorkerError("cohort_unverified")
+
+
 def _check_admission(config, request, admission):
     """Plain decoded admission is admitted only when it matches the expected hash and receipts."""
+    if not isinstance(request, dict):
+        raise VariantWorkerError("input_invalid", cause_code="type_mismatch", cause_path="/request")
     expected = config["producer_admission_sha256"]
     actual = None if admission is None else _admission.admission_hash(admission)
     if expected != actual or request.get("producer_admission_sha256") != actual:
@@ -90,6 +109,7 @@ def execute_variants(snapshot, request, *, run_key, config, verified_cohort, ver
     _check_config(config, "checkpoint_restore" if mode == "checkpoint_restore" else "batch")
     if verified_cohort is None:
         raise VariantWorkerError("cohort_unverified")
+    _check_inventory(verified_cohort)
     _check_admission(config, request, verified_producer_admission)
     if config["mode"] == "checkpoint_restore":
         if input_checkpoint is None or suffix is None:
