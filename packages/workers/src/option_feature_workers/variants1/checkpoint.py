@@ -167,6 +167,10 @@ def validate_restore(checkpoint, request, suffix, cohort_sha256, producer_admiss
     validate_shape(suffix, "Snapshot", "/snapshot")
     validate_scalars(request, "Request", "/request")
     validate_scalars(suffix, "Snapshot", "/snapshot")
+    # CP3 first: a retained cut stream dropped from the current cut is a cut mismatch (index-free pointer).
+    current_streams = {c["stream_id"] for c in request["cut_cursors"]}
+    if any(c["stream_id"] not in current_streams for c in prior["cut_cursors"]):
+        fail("checkpoint_cut_mismatch", "/request/cut_cursors", 3)
     if not _admission_prefix_ok(checkpoint["producer_admission"], producer_admission):
         fail("checkpoint_cut_mismatch", "/checkpoint/producer_admission", 3)
     # CP3 (1): current request knowledge may not regress.
@@ -178,6 +182,8 @@ def validate_restore(checkpoint, request, suffix, cohort_sha256, producer_admiss
         if c["stream_id"] in retained and c["position"] < retained[c["stream_id"]]:
             _regression_after_temporal(history, suffix, request, checkpoint, producer_admission)
             fail("checkpoint_cut_mismatch", "/request/cut_cursors/%d/position" % i, 3)
+    # Root A>K temporal_cut also precedes the merge (merge is last in CP3).
+    _regression_after_temporal(history, suffix, request, checkpoint, producer_admission)
     # CP3 (3): immutable merge. Byte-identical retained identities are reusable;
     # a changed record under a retained identity is an identity_conflict; a repeated
     # identity inside the suffix is rejected as batch uniqueness does.
