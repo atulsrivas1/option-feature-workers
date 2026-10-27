@@ -104,6 +104,28 @@ def _remap(exc):
     return VariantValidationError(exc.code, path, exc.stage)
 
 
+def _regression_after_temporal(history, suffix, request, checkpoint, producer_admission):
+    """CP3 order: existing temporal rules (e.g. root A>K) precede cut-cursor regression.
+
+    Runs admission over the unconflicted union of retained and suffix records and
+    lets only the root A>K temporal_cut (at /request/knowledge_K_ns) through; anything else falls to the caller.
+    """
+    union = dict(history)
+    for name, key in COLLECTIONS:
+        seen = {}
+        for r in list(history.get(name, [])) + list(suffix.get(name, [])):
+            seen.setdefault(r[key], r)
+        union[name] = [seen[k] for k in sorted(seen)]
+    ctx = Ctx(union, request, checkpoint["evaluator_cohort_sha256"], producer_admission, None)
+    try:
+        _admission.stage5(ctx)
+        _admission.stage6(ctx)
+        _admission.stage7(ctx)
+    except VariantValidationError as exc:
+        if exc.code == "temporal_cut" and exc.path == "/request/knowledge_K_ns":
+            raise
+
+
 def validate_restore(checkpoint, request, suffix, cohort_sha256, producer_admission=None):
     """CP0-CP3 checks, then immutable merge. Returns the merged Snapshot.
 
@@ -154,6 +176,7 @@ def validate_restore(checkpoint, request, suffix, cohort_sha256, producer_admiss
     retained = {c["stream_id"]: c["position"] for c in prior["cut_cursors"]}
     for i, c in enumerate(request["cut_cursors"]):
         if c["stream_id"] in retained and c["position"] < retained[c["stream_id"]]:
+            _regression_after_temporal(history, suffix, request, checkpoint, producer_admission)
             fail("checkpoint_cut_mismatch", "/request/cut_cursors/%d/position" % i, 3)
     # CP3 (3): immutable merge. Byte-identical retained identities are reusable;
     # a changed record under a retained identity is an identity_conflict; a repeated
