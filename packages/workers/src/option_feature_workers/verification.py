@@ -29,7 +29,7 @@ _PROJECTS = {
     "option-feature-io": ("io", "option_feature_io"),
     "option-feature-workers": ("workers", "option_feature_workers"),
 }
-_EXACT = {name: "0.1.0a1" for name in _PROJECTS}
+_EXACT = {name: "0.2.0a1" for name in _PROJECTS}
 _EXACT.update({"python-flint": "0.9.0", "duckdb": "1.5.6"})
 _HEX = re.compile(r"[0-9a-f]{64}\Z")
 _COMMIT = re.compile(r"[0-9a-f]{40}\Z")

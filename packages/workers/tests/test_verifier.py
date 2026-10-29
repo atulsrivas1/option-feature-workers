@@ -14,8 +14,8 @@ from option_feature_workers.verification import _wheel_entries
 
 def wheel(path, *, marker=True, corrupt_record=False, extra_bytecode=False, standalone_module=False):
     entries = {"option_feature_workers/__init__.py": b"# synthetic structure only\n",
-               "option_feature_workers-0.1.0a1.dist-info/METADATA":
-                   b"Metadata-Version: 2.4\nName: option-feature-workers\nVersion: 0.1.0a1\n"}
+               "option_feature_workers-0.2.0a1.dist-info/METADATA":
+                   b"Metadata-Version: 2.4\nName: option-feature-workers\nVersion: 0.2.0a1\n"}
     if marker:
         entries["option_feature_workers/_build_identity.json"] = (
             '{"source_commit":"' + "a" * 40 + '"}').encode()
@@ -23,7 +23,7 @@ def wheel(path, *, marker=True, corrupt_record=False, extra_bytecode=False, stan
         entries["option_feature_workers/__pycache__/unqualified.cpython-312.pyc"] = b"synthetic-not-executed"
     if standalone_module:
         entries["standalone.py"] = b"# synthetic standalone source, never imported\n"
-    record = "option_feature_workers-0.1.0a1.dist-info/RECORD"
+    record = "option_feature_workers-0.2.0a1.dist-info/RECORD"
     output = io.StringIO(newline="")
     writer = csv.writer(output)
     for name, content in entries.items():
@@ -34,7 +34,7 @@ def wheel(path, *, marker=True, corrupt_record=False, extra_bytecode=False, stan
     with zipfile.ZipFile(path, "w") as archive:
         for name, content in entries.items():
             archive.writestr(name, content)
-    return Artifact("option-feature-workers", "0.1.0a1", "a" * 40,
+    return Artifact("option-feature-workers", "0.2.0a1", "a" * 40,
                     sha256(path.read_bytes()).hexdigest(), "workers")
 
 

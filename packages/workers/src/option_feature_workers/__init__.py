@@ -10,7 +10,7 @@ from .verification import (
 )
 from .executor import cohort_digest, execute, inspect_resources, replay
 
-__version__ = "0.1.0a1"
+__version__ = "0.2.0a1"
 __all__ = [
     "AdmissionError", "Artifact", "CancellationToken", "Cohort",
     "CohortVerificationError", "ExecutionConfig", "ExecutionError",
