@@ -80,7 +80,7 @@ The externally reviewed source/build receipt uses exactly these JSON fields:
 {
   "receipt_version": "option-source-build1",
   "distribution": "option-feature-workers",
-  "version": "0.1.0a1",
+  "version": "0.2.0a1",
   "source_commit": "<actual reviewed 40 lowercase hex>",
   "wheel_sha256": "<actual wheel SHA256>",
   "source_reference": "<reviewed immutable source reference>",
@@ -101,7 +101,7 @@ or certify numerical correctness. Calculations never read build metadata.
 
 The verifier requires CPython 3.12, exact Python patch version/platform identity,
 the entire installed distribution inventory, all four project packages at
-`0.1.0a1`, python-flint `0.9.0`, DuckDB `1.5.6`, plus every installed transitive or
+`0.2.0a1`, python-flint `0.9.0`, DuckDB `1.5.6`, plus every installed transitive or
 tool distribution in the reviewed cohort. An isolated runtime without pip/build
 tools avoids accidentally qualifying unrelated tools. Wheel hashes, METADATA,
 complete wheel RECORD hashes/sizes, installed RECORD entries and actual installed

@@ -4,16 +4,16 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "option-feature-workers"
-version = "0.1.0a1"
+version = "0.2.0a1"
 description = "Sequential, content-bound option calculation orchestration"
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
 license = "Apache-2.0"
 license-files = ["LICENSE"]
 dependencies = [
-  "option-feature-contracts==0.1.0a1",
-  "option-features==0.1.0a1",
-  "option-feature-io==0.1.0a1",
+  "option-feature-contracts==0.2.0a1",
+  "option-features==0.2.0a1",
+  "option-feature-io==0.2.0a1",
 ]
 
 [tool.setuptools.packages.find]

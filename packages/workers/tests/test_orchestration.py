@@ -28,8 +28,8 @@ def result():
         dependency_binding_ids=(), dependency_record_sha256s=(), valuation_ns=0,
         knowledge_cutoff_ns=0, model_id="not_applicable", formula_version="option-reference1",
         producer_model_id=None, producer_formula_id=None, config_sha256="1" * 64,
-        snapshot_sha256="2" * 64, contracts_package_version="0.1.0a1",
-        calculation_package_version="0.1.0a1")
+        snapshot_sha256="2" * 64, contracts_package_version="0.2.0a1",
+        calculation_package_version="0.2.0a1")
 
 
 def publication():
