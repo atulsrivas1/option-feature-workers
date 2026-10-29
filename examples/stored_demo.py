@@ -2,6 +2,17 @@
 
 No server or browser launch is hidden here. Output is a local HTML file derived
 from actual stored readback, with full direct/worker/stored canonical parity.
+
+Output replacement and its limits (R27 T6):
+- Each output file (index.html, demo-evidence.json) is replaced with os.replace
+  on one volume, so each file is replaced whole or not at all. The two files are
+  NOT jointly atomic. A page whose embedded evidence sha256 does not match
+  demo-evidence.json means a partial replace.
+- No atomic-replace verification is claimed beyond per-file os.replace: no
+  directory fsync and no power-loss guarantee.
+- Process-kill testing is best-effort evidence only and is not proof; proof is
+  by injected os.replace failure.
+- Output files are written with LF line endings.
 """
 import argparse
 import hashlib
